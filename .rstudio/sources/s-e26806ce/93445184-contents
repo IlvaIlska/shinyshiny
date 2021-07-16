@@ -13,7 +13,7 @@ library(shiny)
 ui <- fluidPage(
     
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("Linear Models"),
     
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
@@ -54,12 +54,14 @@ ui <- fluidPage(
             radioButtons("disp", "Display",
                          choices = c(Head = "head",
                                      All = "all"),
-                         selected = "head")
+                         selected = "head"),
+            
+            actionButton("compute","Linear Model"),
         ),
         
         # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("distPlot"),
+            plotOutput("scatter"),
             plotOutput("lmPlot"),
             tableOutput("contents")
         )
@@ -79,6 +81,10 @@ server <- function(input, output) {
         return(df)
     })
     
+    linreg <- eventReactive(input$compute, {
+        lm(dataInput()$y ~ dataInput()$x)
+    })
+    
     # output$distPlot <- renderPlot({
     #     # generate bins based on input$bins from ui.R
     #     x    <- faithful[, 2]
@@ -89,12 +95,13 @@ server <- function(input, output) {
     # })
     # 
     
-    output$distPlot <- renderPlot({
+    output$scatter <- renderPlot({
         plot(dataInput()$x,dataInput()$y)
     })
     
-    output$lmtPlot <- renderPlot({
+    output$lmPlot <- renderPlot({
         plot(dataInput()$x,dataInput()$y)
+        abline(linreg())
     })
     
     
