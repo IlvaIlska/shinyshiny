@@ -1,2 +1,3 @@
 1626365540735:shiny::runApp('ShinyShiny')
 1626365558203:runApp('ShinyShiny')
+1626410431800:install.packages("shiny")
