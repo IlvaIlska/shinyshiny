@@ -9,6 +9,7 @@ dependencies:
   - r-dplyr
   - r-ggplot2
   - r-reshape2
+  - r-shiny
   - r-tidyverse
   - pip
   - pip:
