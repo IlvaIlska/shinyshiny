@@ -63,7 +63,8 @@ ui <- fluidPage(
         mainPanel(
             plotOutput("scatter"),
             plotOutput("lmPlot"),
-            tableOutput("contents")
+            tableOutput("contents"), 
+            verbatimTextOutput("sum")
         )
     )
 )
@@ -85,6 +86,8 @@ server <- function(input, output) {
         lm(dataInput()$y ~ dataInput()$x)
     })
     
+    
+    
     # output$distPlot <- renderPlot({
     #     # generate bins based on input$bins from ui.R
     #     x    <- faithful[, 2]
@@ -102,6 +105,13 @@ server <- function(input, output) {
     output$lmPlot <- renderPlot({
         plot(dataInput()$x,dataInput()$y)
         abline(linreg())
+        
+       
+    })
+    
+    output$sum <- renderPrint({
+        
+        summary(linreg())
     })
     
     
